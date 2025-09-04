@@ -7,14 +7,14 @@
 
         </div>
 
-        <div class="login-container">
+        <div class="login-container" [formGroup]="loginForm">
             <img src="imgs/Chat.jpg" alt="Logo">
             <h1 class="titulo">Login</h1>
 
-            <input class="inpt" type="email" placeholder="Insira o e-mail">
-            <input class="inpt" type="password" placeholder="Insira a senha">
+            <input class="inpt" type="email" placeholder="Insira o e-mail" formControlname="email">
+            <input class="inpt" type="password" placeholder="Insira a senha" formControlname="password">
 
-            <button class="button">Entrar</button>
+            <button class="button" (click)="onLoginClick()">Entrar</button>
 
 
         </div>
