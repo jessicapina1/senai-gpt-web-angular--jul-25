@@ -11,6 +11,11 @@ export class LoginScreenComponent {
 
   loginForm: FormGroup;
 
+  emailErrorMessage: string;
+  passwordErrorMessage: string;
+  loginSuccessful: string;
+  loginFail: string;
+
   constructor (private fb: FormBuilder) {
     //quando a tela iniciar
     this.loginForm = this.fb.group({
@@ -18,22 +23,39 @@ export class LoginScreenComponent {
       password: ["", [Validators.required]] //cria o campo obrigatorio de senha
     });
 
+    this.emailErrorMessage = ""; //inicia com uma string vazia
+    this.passwordErrorMessage = "";
+    this.loginSuccessful = "";
+    this.loginFail = "";
+    
   }
 
   async onLoginClick() { //funcao assincrona porque vai buscar as informacoes no servidor
-    alert("Botao de login clicado.");
+    // alert("Botao de login clicado.");
+    
     console.log ("Email", this.loginForm.value.email);
     console.log ("Password", this.loginForm.value.password);
 
+    this.emailErrorMessage = ""; //inicia com uma string vazia
+    this.passwordErrorMessage = "";
+    this.loginSuccessful = "";
+    this.loginFail = "";
+
+
      if (this.loginForm.value.email=== "") {
 
-      alert ("INSIRA O E-MAIL")
+      // alert ("INSIRA O E-MAIL")
+      this.emailErrorMessage = "O campo de e-mail é obrigatório"
       return;
     }
 
     if (this.loginForm.value.password === "") {
 
-      alert ("INSIRA A SENHA")
+      // alert ("INSIRA A SENHA")
+      this.passwordErrorMessage = "O campo de senha é obrigatório"
+      // this.loginFail = "";
+      // this.loginSuccessful = "";
+      
       return;
     }
 
@@ -56,21 +78,28 @@ export class LoginScreenComponent {
 
     if (response.status>=200 && response.status<=299) {
 
-      alert ("O LOGIN DEU CERTO")
+      // alert ("O LOGIN DEU CERTO")
+      this.loginSuccessful = "Login realizado com sucesso"
+      // this.loginFail = ""
 
     }
-    else if (response.status>= 300 && response.status<=399) {
+    else {
+      this.loginFail = "Falha no login"
+      // this.loginSuccessful = ""
 
-      alert ("ERRO- REDIRECIONAMENTO")
     }
-    else if (response.status>=400 && response.status<=499) {
+    // else if (response.status>= 300 && response.status<=399) {
 
-      alert ("ERRO - FALHA DE USUARIO")
-    }
-    else if (response.status>=500 && response.status<=599) {
+    //   alert ("ERRO- REDIRECIONAMENTO")
+    // }
+    // else if (response.status>=400 && response.status<=499) {
 
-      alert ("ERRO DE SERVIDOR")
-    }
+    //   alert ("ERRO - FALHA DE USUARIO")
+    // }
+    // else if (response.status>=500 && response.status<=599) {
+
+    //   alert ("ERRO DE SERVIDOR")
+    // }
     
    
   }

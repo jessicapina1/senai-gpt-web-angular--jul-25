@@ -12,9 +12,15 @@
             <h1 class="titulo">Login</h1>
 
             <input class="inpt" type="email" placeholder="Insira o e-mail" formControlName="email">
+            <span class = "error-message">{{emailErrorMessage}}</span>
+
             <input class="inpt" type="password" placeholder="Insira a senha" formControlName="password">
+            <span class = "error-message">{{passwordErrorMessage}}</span>
 
             <button class="button" (click)="onLoginClick()">Entrar</button>
+
+            <span class="login-alert">{{loginSuccessful}}</span>
+            <span class="login-alert">{{loginFail}}</span>
 
 
         </div>

@@ -75,3 +75,18 @@
     cursor: pointer;
 
 }
+
+.error-message {
+
+    color: red;
+    font-size: 12px;
+    transform: translateY(-12px);
+}
+
+.login-alert {
+
+    color: red;
+    font-size: 12px;
+    transform: translateY(18px);
+}
+
