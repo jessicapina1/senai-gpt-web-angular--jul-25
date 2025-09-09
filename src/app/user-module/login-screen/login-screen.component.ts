@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
@@ -16,7 +16,7 @@ export class LoginScreenComponent {
   loginSuccessful: string;
   loginFail: string;
 
-  constructor (private fb: FormBuilder) {
+  constructor (private fb: FormBuilder, private cd: ChangeDetectorRef) {
     //quando a tela iniciar
     this.loginForm = this.fb.group({
       email: ["", [Validators.required]], //cria o campo obrigatorio de email
@@ -79,15 +79,27 @@ export class LoginScreenComponent {
     if (response.status>=200 && response.status<=299) {
 
       // alert ("O LOGIN DEU CERTO")
-      this.loginSuccessful = "Login realizado com sucesso"
-      // this.loginFail = ""
+      this.loginSuccessful = "Login realizado com sucesso";
+
+      let json = await response.json();
+      console.log("JSON",json);
+      let meuToken = json.accessToken;
+      let userId = json.user.id;
+
+      localStorage.setItem("meuToken", meuToken);
+      localStorage.setItem("meuId", userId);
+
+      window.location.href = "chat";
 
     }
     else {
       this.loginFail = "Falha no login"
-      // this.loginSuccessful = ""
+      
 
     }
+
+
+    this.cd.detectChanges(); //Forcar atualizacao da tela
     // else if (response.status>= 300 && response.status<=399) {
 
     //   alert ("ERRO- REDIRECIONAMENTO")
