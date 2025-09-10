@@ -1,0 +1,67 @@
+.titulo {
+
+    font-size: 76px;
+    font-family: "inter";
+    font-weight: 400;
+    margin-bottom: 16px;
+
+}
+
+.robo-image {
+
+    background-size:cover;
+    background-position: 0px -100px;
+    
+    width: 50vw; /*50% da largura do monitor*/
+    height: 100vh; /*100% da altura da tela*/
+
+
+}
+
+.page-container {
+
+    display: flex; /*deixa os elementos um ao lado do outro*/
+
+}
+
+.login-container {
+
+    width: 50vw;
+    height: 100vh;
+
+    /*kit de centralizacao*/
+    display: flex; /*ativar o flex*/
+    flex-direction: column; /*Muda o flex para colunas*/
+    align-items: center; /*centralizar horizontalmente*/
+    justify-content: center; /*centralizar verticamente*/
+
+}
+
+.login-container img {
+    height: 60px;
+}
+
+.inpt {
+
+    padding: 18px; /*margem interna*/
+    background-color: #F7F9FB;
+    width: 377px;
+    height: 56px;
+    border: 1px solid #ccc; /*grossura da bordinha do campo*/
+    border-radius: 10px; /*arredondar borda*/
+    margin-bottom: 16px; /*distancia entre os campos*/
+}
+
+.button {
+
+    width: 377px;
+    height: 56px;
+    border-radius: 12px;
+    background-color: #1c1c1c;
+    color: white;
+    padding: 18px;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 20px;
+
+}

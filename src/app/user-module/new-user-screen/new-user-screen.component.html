@@ -1,0 +1,33 @@
+ <header></header>
+ 
+ <main class="page-container">
+        <div class="robo-image">
+
+            <img class="robo-image" src="imgs/new-user.jpg" alt="Robo GPT">
+
+        </div>
+
+        <div class="login-container" [formGroup]="newForm">
+            <img src="imgs/Chat.jpg" alt="Logo">
+            <h1 class="titulo">Novo Usuário</h1>
+
+            <input class="inpt" type="email" placeholder="Insira o nome do Usuário" formControlName="name">           
+
+            <input class="inpt" type="password" placeholder="Insira o e-mail" formControlName="email">
+
+            <input class="inpt" type="password" placeholder="Insira a senha" formControlName="password">
+
+            <input class="inpt" type="password" placeholder="Confirme a senha">
+            
+
+            <button class="button" (click)="onLoginClick()">Entrar</button>
+
+            <a href="/login">Clique aqui para fazer o login</a>
+
+
+
+        </div>
+
+   </main>
+    
+   <footer></footer>
