@@ -12,15 +12,19 @@
             <h1 class="titulo">Novo Usuário</h1>
 
             <input class="inpt" type="email" placeholder="Insira o nome do Usuário" formControlName="name">           
-
-            <input class="inpt" type="password" placeholder="Insira o e-mail" formControlName="email">
+            <span class="login-alert">{{nameErrorMessage}}</span>
+            
+            <input class="inpt" type="email" placeholder="Insira o e-mail" formControlName="email">
+            <span class="login-alert">{{emailErrorMessage}}</span>
 
             <input class="inpt" type="password" placeholder="Insira a senha" formControlName="password">
+            <span class="login-alert">{{passwordErrorMessage}}</span>
 
-            <input class="inpt" type="password" placeholder="Confirme a senha">
-            
+            <input class="inpt" type="password" placeholder="Confirme a senha" formControlName="password2">
+            <span class="login-alert">{{password2ErrorMessage}}</span>
+            <span class=" login-alert">{{correctPassword}}</span>
 
-            <button class="button" (click)="onLoginClick()">Entrar</button>
+            <button class="button" (click)="onEnterClick()">Entrar</button>
 
             <a href="/login">Clique aqui para fazer o login</a>
 

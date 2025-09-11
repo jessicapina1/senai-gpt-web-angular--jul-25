@@ -65,3 +65,11 @@
     margin-bottom: 20px;
 
 }
+
+.login-alert {
+
+    color: red;
+    font-size: 12px;
+    transform: translateY(-16px);
+}
+
