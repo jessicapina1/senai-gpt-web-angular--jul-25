@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormControlName, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-new-user-screen',
@@ -15,7 +15,8 @@ export class NewUserScreenComponent {
   passwordErrorMessage: string;
   nameErrorMessage: string;
   password2ErrorMessage: string;
-  correctPassword: string
+  correctPassword: string;
+  caracPassword: string
 
 
   constructor (private fb: FormBuilder) {
@@ -23,7 +24,7 @@ export class NewUserScreenComponent {
     this.newForm = this.fb.group({
       name: ["", [Validators.required]],
       email: ["", [Validators.required]], //cria o campo obrigatorio de email
-      password: ["", [Validators.required]], //cria o campo obrigatorio de senha
+      password: ["", [Validators.required,]], //cria o campo obrigatorio de senha
       password2: ["", [Validators.required]]
     });
 
@@ -31,29 +32,32 @@ export class NewUserScreenComponent {
     this.passwordErrorMessage = "";
     this.nameErrorMessage = "";
     this.password2ErrorMessage = "";
-    this.correctPassword = ""
+    this.correctPassword = "";
+    this.caracPassword = ""
 
   }
 
-  async onEnterClick () {
+  validacoes() {
+
 
     this.emailErrorMessage = ""; 
     this.passwordErrorMessage = "";
     this.nameErrorMessage = "";
     this.password2ErrorMessage = "";
-    this.correctPassword= ""
+    this.correctPassword = "";87
+    this.caracPassword = "";
 
-    if (this.newForm.value.name==="") {
+     if (this.newForm.value.name==="") {
 
       this.nameErrorMessage = "Preencha o nome"
-      return
+      return false
     }
 
     if (this.newForm.value.email=== "") {
 
       
       this.emailErrorMessage = "O campo de e-mail é obrigatório"
-      return
+      return false
      
     }
 
@@ -61,22 +65,37 @@ export class NewUserScreenComponent {
 
   
       this.passwordErrorMessage = "O campo de senha é obrigatório"
-      return
+      return false
       
      
     }
     if (this.newForm.value.password2=== "") {
 
       this.password2ErrorMessage = "Confirme a senha"
-      return
+      return false
     }
 
     if (this.newForm.value.password != this.newForm.value.password2) {
 
       this.correctPassword = "As senhas precisam ser iguais"
+      return false
+    }
+
+
+    return true
+
+  }
+
+  async onEnterClick () {
+
+  
+
+   
+    let hasError = this.validacoes();
+
+    if (hasError == false) {
       return
     }
-    
 
 
     let response = await fetch ("https://senai-gpt-api.azurewebsites.net/users", { //fetch busca a informacao no servidor
@@ -91,7 +110,7 @@ export class NewUserScreenComponent {
         nome: this.newForm.value.name,
         email: this.newForm.value.email,
         password: this.newForm.value.password,
-        password2: this.newForm.value.password2
+        
       })
 
     });
@@ -104,11 +123,12 @@ export class NewUserScreenComponent {
       let json = await response.json();
       console.log("JSON",json);
       let userId = json.id;
-      let meuToken = json.accessToken;
       
 
       localStorage.setItem("meuId",userId);
-      localStorage.setItem("meuToken",meuToken)
+
+      
+      window.location.href = "login"
             
 
     }
