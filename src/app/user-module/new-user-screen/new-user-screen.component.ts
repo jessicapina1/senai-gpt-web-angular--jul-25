@@ -23,8 +23,8 @@ export class NewUserScreenComponent {
     //quando a tela iniciar
     this.newForm = this.fb.group({
       name: ["", [Validators.required]],
-      email: ["", [Validators.required]], //cria o campo obrigatorio de email
-      password: ["", [Validators.required,]], //cria o campo obrigatorio de senha
+      email: ["", [Validators.required],Validators.email], //cria o campo obrigatorio de email
+      password: ["", [Validators.required],Validators.minLength(6)], //cria o campo obrigatorio de senha
       password2: ["", [Validators.required]]
     });
 
@@ -44,7 +44,7 @@ export class NewUserScreenComponent {
     this.passwordErrorMessage = "";
     this.nameErrorMessage = "";
     this.password2ErrorMessage = "";
-    this.correctPassword = "";87
+    this.correctPassword = "";
     this.caracPassword = "";
 
      if (this.newForm.value.name==="") {
@@ -78,6 +78,18 @@ export class NewUserScreenComponent {
     if (this.newForm.value.password != this.newForm.value.password2) {
 
       this.correctPassword = "As senhas precisam ser iguais"
+      return false
+    }
+
+    if (this.newForm.value.password.length < 6) {
+
+      this.caracPassword = "Senha pouca"
+      return false
+    }
+
+    if (!this.newForm.valid) {
+      this.emailErrorMessage = "Formato incorreto para e-mail"
+      this.caracPassword = "A senha deve ter no mínimo 6 caracteres"
       return false
     }
 
