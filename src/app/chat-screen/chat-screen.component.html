@@ -6,9 +6,8 @@
     
                 <button class="new-chat"><i class="fa-solid fa-plus"></i>New Chat</button>
                 <br>
-                <a href=""><i class="fa-regular fa-message"></i>Al Chat Tool Ethics</a>
-                <a href=""><i class="fa-regular fa-message"></i>Al Chat Impact Writing</a>
-                <a href=""><i class="fa-regular fa-message"></i>New Chat</a>
+                <a *ngFor="let chat of chats"><i class="fa-regular fa-message"></i>{{ chat.chatTitle }}</a>
+                
 
             </div>
             <div class="bottom">

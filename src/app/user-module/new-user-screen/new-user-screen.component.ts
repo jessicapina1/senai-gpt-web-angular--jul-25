@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormBuilder, FormControl, FormControlName, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
@@ -16,15 +16,16 @@ export class NewUserScreenComponent {
   nameErrorMessage: string;
   password2ErrorMessage: string;
   correctPassword: string;
-  caracPassword: string
+  caracPassword: string;
+  emailErrorMessage2: string
 
 
-  constructor (private fb: FormBuilder) {
+  constructor (private fb: FormBuilder, private cd: ChangeDetectorRef) {
     //quando a tela iniciar
     this.newForm = this.fb.group({
       name: ["", [Validators.required]],
-      email: ["", [Validators.required],Validators.email], //cria o campo obrigatorio de email
-      password: ["", [Validators.required],Validators.minLength(6)], //cria o campo obrigatorio de senha
+      email: ["", [Validators.required,Validators.email]], //cria o campo obrigatorio de email
+      password: ["", [Validators.required,Validators.minLength(6)]], //cria o campo obrigatorio de senha
       password2: ["", [Validators.required]]
     });
 
@@ -33,7 +34,8 @@ export class NewUserScreenComponent {
     this.nameErrorMessage = "";
     this.password2ErrorMessage = "";
     this.correctPassword = "";
-    this.caracPassword = ""
+    this.caracPassword = "";
+    this.emailErrorMessage2 = "";
 
   }
 
@@ -46,6 +48,7 @@ export class NewUserScreenComponent {
     this.password2ErrorMessage = "";
     this.correctPassword = "";
     this.caracPassword = "";
+    this.emailErrorMessage2 = "";
 
      if (this.newForm.value.name==="") {
 
@@ -83,12 +86,12 @@ export class NewUserScreenComponent {
 
     if (this.newForm.value.password.length < 6) {
 
-      this.caracPassword = "Senha pouca"
+      this.caracPassword = "A senha deve ter no mínimo 6 caracteres"
       return false
     }
 
-    if (!this.newForm.valid) {
-      this.emailErrorMessage = "Formato incorreto para e-mail"
+    if (this.newForm.invalid) {
+      this.emailErrorMessage2 = "Formato incorreto para e-mail"
       this.caracPassword = "A senha deve ter no mínimo 6 caracteres"
       return false
     }
@@ -100,9 +103,16 @@ export class NewUserScreenComponent {
 
   async onEnterClick () {
 
-  
+  //if (this.userForm.value.password.includes(@) == false){
+  //alert ("email invalido");
+  //return
+//}
+// if (this.userForm.invalid) {
+// alert()
+//return
+//}
 
-   
+
     let hasError = this.validacoes();
 
     if (hasError == false) {
@@ -144,6 +154,8 @@ export class NewUserScreenComponent {
             
 
     }
+
+    this.cd.detectChanges()
     
 
   }
