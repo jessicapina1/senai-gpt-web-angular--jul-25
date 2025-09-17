@@ -5,8 +5,18 @@
             <div class="top">
     
                 <button class="new-chat"><i class="fa-solid fa-plus"></i>New Chat</button>
-                <br>
-                <a *ngFor="let chat of chats"><i class="fa-regular fa-message"></i>{{ chat.chatTitle }}</a>
+
+                @for (chat of chats; track $index) {
+
+                    <a (click)="onChatClick(chat)">
+                    <i class="fa-regular fa-message"></i>
+                    {{ chat.chatTitle }}
+                    </a>
+
+                }
+                
+                <!-- <a *ngFor="let chat of chats"><i class="fa-regular fa-message"></i>{{ chat.chatTitle }}</a> -->
+                
                 
 
             </div>

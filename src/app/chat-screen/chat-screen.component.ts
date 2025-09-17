@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { firstValueFrom } from 'rxjs';
 
 interface IChat {
   chatTitle: string;
@@ -9,33 +10,47 @@ interface IChat {
 
 }
 
+interface IMessage {
+  chatId: number;
+  text: string;
+  userId: string;
+  id: number;
+
+}
+
 @Component({
   selector: 'app-chat-screen',
-  imports: [HttpClientModule, CommonModule],
+  imports: [CommonModule],
   templateUrl: './chat-screen.component.html',
   styleUrl: './chat-screen.component.css'
 })
 export class ChatScreenComponent {
 
   chats: IChat[];
+  chatSelecionado: IChat;
+  mensagens: IMessage[];
 
-  constructor (private http: HttpClient) { //Constroi a classe - inicializacao de variaveis
-    
+
+  constructor(private http: HttpClient) { //Constroi a classe - inicializacao de variaveis
+
     this.chats = [];
+    this.chatSelecionado = null!;
+    this.mensagens = [];
 
   }
-  ngOnInit () { //Executado quando o angular esta pronto para rodar - buscar dados da API.
+  ngOnInit() { //Executado quando o angular esta pronto para rodar - buscar dados da API.
 
     this.getChats();
 
   }
-  async getChats () { //metodo que busca os chats da API
-    let response = await this.http.get ("https://senai-gpt-api.azurewebsites.net/chats", {
+  async getChats() { //metodo que busca os chats da API
+    let response = await firstValueFrom(this.http.get("https://senai-gpt-api.azurewebsites.net/chats", {
       headers: {
-        "Authorization" : "Bearer " + localStorage.getItem("meuToken")
+        "Authorization": "Bearer " + localStorage.getItem("meuToken")
       }
 
-    }).toPromise();
+
+    }))
 
     if (response) {
 
@@ -49,7 +64,27 @@ export class ChatScreenComponent {
 
     }
 
+   // this.chatSelecionado.detectChanges();
   }
 
-}
+  async onChatClick(chatClicado: IChat) {
 
+    console.log("Chat Clicado", chatClicado);
+
+    this.chatSelecionado = chatClicado;
+
+    //Logica para buscar as mensagens.
+    let response = await firstValueFrom(this.http.get("https://senai-gpt-api.azurewebsites.net/messages?chatId=" + chatClicado.id, {
+      headers: {
+        "Authorization": "Bearer " + localStorage.getItem("meuToken")
+      }
+
+
+    }));
+
+    console.log ("MENSAGENS", response);
+
+    this.mensagens = response as IMessage[];
+
+  }
+}
