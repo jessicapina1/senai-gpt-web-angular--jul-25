@@ -53,10 +53,13 @@ export class ChatScreenComponent {
       }
 
 
-    }));
+    })) as IChat[];
 
     if (response) {
+      let userId = localStorage.getItem("meuId");
+      response = response.filter(chat=>chat.userId == userId);
 
+      //mostra os chats na tela
       this.chats = response as [];
 
 
@@ -147,6 +150,50 @@ export class ChatScreenComponent {
     }));
 
     await this.onChatClick(this.chatSelecionado);
+
+  }
+
+  async novoChat () {
+
+    const nomeChat = prompt("Digite o nome do novo chat:");
+    if (!nomeChat) {
+      //caso o usuario deixe o campo vazio
+      alert("Nome inválido.")
+        return;
+  
+    }
+    const novoChatObj = {
+
+      chatTitle: nomeChat,
+      userId: localStorage.getItem ("meuId"),
+
+      //id - sera gerado pelo backend quando cadastrar
+      }
+      let novoChatResponse = await firstValueFrom(this.http.post("https://senai-gpt-api.azurewebsites.net/chats", novoChatObj, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + localStorage.getItem("meuToken")
+      }
+
+    })) as IChat;
+
+
+    //atualiza os chats da tela
+    await this.getChats();
+    //abre direto o novo chat criado
+    await this.onChatClick(novoChatResponse);
+
+
+  }
+
+  deslogar () {
+
+    // alternativa - local.Storage.remove.Item("meuToken") e ("meuId")
+
+    localStorage.clear();
+
+    window.location.href = "login";
+
 
   }
 }

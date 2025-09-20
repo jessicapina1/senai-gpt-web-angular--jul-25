@@ -4,7 +4,7 @@
 
         <div class="top">
 
-            <button class="new-chat"><i class="fa-solid fa-plus"></i>New Chat</button>
+            <button class="new-chat" (click)="novoChat()"><i class="fa-solid fa-plus"></i>New Chat</button>
 
             @for (chat of chats; track $index) {
 
@@ -15,7 +15,7 @@
 
             }
 
-            <!-- <a *ngFor="let chat of chats"><i class="fa-regular fa-message"></i>{{ chat.chatTitle }}</a> -->
+            <!-- <a *ngFor="let chat of chats"><i class="fa-regular fa-message"></i>{{ chat.chatTitle }}</a> METODO ANTIGO/DESATUALIZADO-->
 
 
 
@@ -25,7 +25,7 @@
             <a href=""><i class="fa-regular fa-lightbulb"></i>Light mode</a>
             <a href=""><i class="fa-regular fa-user"></i>My account</a>
             <a href=""><i class="fa-regular fa-pen-to-square"></i>Updates & FAQ</a>
-            <a href=""><i class="fa-solid fa-arrow-right-from-bracket"></i>Log out</a>
+            <a href="" (click)="deslogar()"><i class="fa-solid fa-arrow-right-from-bracket"></i>Log out</a>
 
 
         </div>
@@ -88,7 +88,7 @@
 
         }
 
-        @if (chatSelecionado != null) {
+        @if (chatSelecionado != null) { <!--executado quando o usuario tiver clicado em um chat -->
 
         <div class="chat-container">
 
@@ -110,7 +110,7 @@
 
         </div>
 
-        }
+    
 
 
 
@@ -122,6 +122,7 @@
 
         </div>
 
+        }
 
     </main>
 
