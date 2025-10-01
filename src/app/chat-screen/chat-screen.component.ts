@@ -31,7 +31,7 @@ export class ChatScreenComponent {
   chatSelecionado: IChat;
   mensagens: IMessage[];
   mensagemUsuario = new FormControl(""); //declaramos e atribuimos valor, nao precisa iniciar no construtor
-
+  darkMode: boolean= false;
 
   constructor(private http: HttpClient, private cd:ChangeDetectorRef) { //Constroi a classe - inicializacao de variaveis
 
@@ -43,6 +43,14 @@ export class ChatScreenComponent {
   ngOnInit() { //Executado quando o angular esta pronto para rodar - buscar dados da API.
 
     this.getChats();
+
+    let darkModeLocalStorage = localStorage.getItem("darkMode");
+
+    if (darkModeLocalStorage == "true") {
+
+      this.darkMode = true;
+      document.body.classList.toggle ("dark-mode", this.darkMode)
+    }
 
   }
 
@@ -195,5 +203,13 @@ export class ChatScreenComponent {
     window.location.href = "login";
 
 
+  }
+
+  ligaDesligaDarkMode () {
+    this.darkMode = !this.darkMode;
+    document.body.classList.toggle("dark-mode", this.darkMode);
+
+    localStorage.setItem("darkMode", this.darkMode.toString());
+  
   }
 }
